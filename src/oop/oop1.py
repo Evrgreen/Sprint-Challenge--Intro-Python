@@ -20,29 +20,34 @@
 
 class Vehicle:
     pass
-# This is the base class 
+# This is the base class
 
 
 class FlightVehicle(Vehicle):
     pass
-    # Child of baseclass 
-class AeroPlane(FlightVehicle):
+    # Child of baseclass
+
+
+class Airplane(FlightVehicle):
     pass
     # child of FlightVehicle, grandchild of Vehicle
-class StarShipe(FlightVehicle):
+
+
+class Starship(FlightVehicle):
     pass
     # child of FlightVehicle, grandchild of Vehicle
-
-
-
 
 
 class GroundVehicle(Vehicle):
     pass
     # child of baseclass
+
+
 class Car(GroundVehicle):
     pass
     # child of FlightVehicle, grandchild of Vehicle
+
+
 class Motorcycle(GroundVehicle):
     pass
     # child of FlightVehicle, grandchild of Vehicle
