@@ -84,6 +84,8 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     within = []
     if(lat1 < lat2):
         lat1, lat2 = lat2, lat1
+    if(lon1 < lon2):
+        lon1, lon2 = lon2, lon1
     perimeter = Geosquare(lat1, lon1, lat2, lon2)
     for city in cities:
         if perimeter.within(city):
@@ -91,7 +93,6 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
     # the specified coordinates.
-
     return within
 
 
@@ -103,7 +104,7 @@ def floatCheck(value):
 
 
 class Geosquare:
-    def __init__(self, upper, lower, left, right):
+    def __init__(self, upper, left, lower, right):
         self.upper = float(upper)
         self.lower = float(lower)
         self.left = float(left)
@@ -111,6 +112,12 @@ class Geosquare:
 
     def __str__(self):
         return f'My upper,left corner is {self.upper,self.left} and my lower,right corner is {self.lower,self.right}'
+
+    def correct(self):
+        if self.upper < self.lower:
+            self.upper, self.lower = self.lower, self.upper
+        if self.left < self.right:
+            self.left, self.right = self.right, self.left
 
     def within(self, city):
         if (city.lat < self.upper and city.lat > self.lower) and (city.lon < self.left and city.lon > self.right):
@@ -120,4 +127,4 @@ class Geosquare:
 
 
 # cityreader_stretch(5.25, 2.522, 40.435, 5.75)
-print(len(cityreader_stretch(45, -100, 32, -120, cities)), len(cities))
+# print(len(cityreader_stretch(45, -100, 32, -120, cities)), len(cities))
