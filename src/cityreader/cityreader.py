@@ -46,8 +46,6 @@ cityreader(cities)
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
     print(c)
-    print(type(c.lat))
-    print(type(c.name))
 
 # STRETCH GOAL!
 #
@@ -84,9 +82,42 @@ for c in cities:
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
     within = []
-
+    if(lat1 < lat2):
+        lat1, lat2 = lat2, lat1
+    perimeter = Geosquare(lat1, lon1, lat2, lon2)
+    for city in cities:
+        if perimeter.within(city):
+            within.append(city)
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
     # the specified coordinates.
 
     return within
+
+
+def floatCheck(value):
+    try:
+        return float(value)
+    except(ValueError):
+        print(f'{value} cannot be converted into a float')
+
+
+class Geosquare:
+    def __init__(self, upper, lower, left, right):
+        self.upper = float(upper)
+        self.lower = float(lower)
+        self.left = float(left)
+        self.right = float(right)
+
+    def __str__(self):
+        return f'My upper,left corner is {self.upper,self.left} and my lower,right corner is {self.lower,self.right}'
+
+    def within(self, city):
+        if (city.lat < self.upper and city.lat > self.lower) and (city.lon < self.left and city.lon > self.right):
+            return True
+        else:
+            return False
+
+
+# cityreader_stretch(5.25, 2.522, 40.435, 5.75)
+print(len(cityreader_stretch(45, -100, 32, -120, cities)), len(cities))
